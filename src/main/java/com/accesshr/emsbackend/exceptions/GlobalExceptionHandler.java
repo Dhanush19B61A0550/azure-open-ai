@@ -31,15 +31,7 @@ public class GlobalExceptionHandler {
         return "An internal error occurred"; // Return a default error message
     }
 
-    // This method is triggered when a ResourceNotFoundException is thrown in any controller
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> resourceNotFoundException(ResourceNotFoundException e, WebRequest request) {
-        Map<String, Object> responseBody=new HashMap<>();
-        responseBody.put("timestamp", LocalDateTime.now());
-        responseBody.put("message", e.getMessage());
-        responseBody.put("details", request.getDescription(false));
-        return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
-    }
+
 }
 
 

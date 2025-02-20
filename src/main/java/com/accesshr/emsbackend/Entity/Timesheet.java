@@ -1,7 +1,6 @@
 package com.accesshr.emsbackend.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
