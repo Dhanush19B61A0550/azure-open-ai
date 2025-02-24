@@ -20,7 +20,7 @@ pipeline {
                     usernamePassword(credentialsId: 'AZURE_SERVICE_PRINCIPAL', 
                                      usernameVariable: 'AZURE_SERVICE_PRINCIPAL', 
                                      passwordVariable: 'AZURE_CREDENTIALS_PASSWORD'),
-                    string(credentialsId: 'AZURE_CREDENTIALS_TENANT', variable: 'AZURE_CREDENTIALS_TENANT')
+                    usernamePassword(credentialsId: 'AZURE_CREDENTIALS_TENANT', variable: 'AZURE_CREDENTIALS_TENANT')
                 ]) {
                     echo "Logging into Azure with Service Principal."
 
