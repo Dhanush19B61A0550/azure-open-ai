@@ -34,7 +34,7 @@ pipeline {
             // az webapp deploy --resource-group dhana --name backend-ai --src-path target/*.jar --type jar
             // '''
 
-echo "hii"
+
  // bat '''
  //            az login --service-principal -u %AZURE_SERVICE_PRINCIPAL% -p %AZURE_CREDENTIALS_PASSWORD% --tenant %AZURE_CREDENTIALS_TENANT%
  //            az webapp deploy --resource-group dhana --name backend-ai --src-path target/*.jar --type jar
@@ -50,7 +50,7 @@ stage('Deploy') {
             string(credentialsId: 'AZURE_CREDENTIALS_TENANT', variable: 'AZURE_CREDENTIALS_TENANT')
         ]) {
             echo "Logging into Azure with Service Principal."
-
+echo "hii"
             bat '''
             az login --service-principal -u %AZURE_SERVICE_PRINCIPAL% -p %AZURE_CREDENTIALS_PASSWORD% --tenant %AZURE_CREDENTIALS_TENANT%
             az webapp deploy --resource-group dhana --name backend-ai --src-path target/*.jar --type jar
