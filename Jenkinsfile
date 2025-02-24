@@ -26,6 +26,9 @@ pipeline {
         withCredentials([string(credentialsId: 'AZURE_SERVICE_PRINCIPAL', variable: 'AZURE_SERVICE_PRINCIPAL'),
                          string(credentialsId: 'AZURE_CREDENTIALS_PASSWORD', variable: 'AZURE_CREDENTIALS_PASSWORD'),
                          string(credentialsId: 'AZURE_CREDENTIALS_TENANT', variable: 'AZURE_CREDENTIALS_TENANT')]) {
+            echo $AZURE_SERVICE_PRINCIPAL
+            echo $AZURE_CREDENTIALS_PASSWORD
+            echo $AZURE_CREDENTIALS_TENANT
             bat '''
             az login --service-principal -u $AZURE_SERVICE_PRINCIPAL -p $AZURE_CREDENTIALS_PASSWORD --tenant $AZURE_CREDENTIALS_TENANT
             az webapp deploy --resource-group dhana --name backend-ai --src-path target/*.jar --type jar
