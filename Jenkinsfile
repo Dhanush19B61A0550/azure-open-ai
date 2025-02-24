@@ -13,12 +13,16 @@ pipeline {
             }
         }
         stage('Deploy') {
+            environment {
+                AZURE_CREDENTIALS = credentials('azure-service-principal')
+            }
             steps {
-                withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
-                    bat '''
-                        az login --service-principal -u $AZURE_CREDENTIALS_USR -p $AZURE_CREDENTIALS_PSW --tenant $AZURE_CREDENTIALS_TEN
-                        az webapp deploy --resource-group MyResourceGroup --name MyAppService --src-path target/*.jar
-                    '''
+                script {
+                    def jarFile = sh(script: 'ls target/*.jar', returnStdout: true).trim()
+                    bat """
+                        az login --service-principal -u ${AZURE_CREDENTIALS_USR} -p ${AZURE_CREDENTIALS_PSW} --tenant ${AZURE_CREDENTIALS_TENANT}
+                        az webapp deploy --resource-group <RESOURCE_GROUP_NAME> --name <APP_SERVICE_NAME> --src-path ${jarFile}
+                    """
                 }
             }
         }
