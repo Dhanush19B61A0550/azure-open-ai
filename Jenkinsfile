@@ -4,29 +4,21 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    bat 'mvn clean package'
-                }
+                bat 'mvn clean package'
             }
         }
-
         stage('Test') {
             steps {
-                script {
-                    bat 'mvn test'
-                }
+                bat 'mvn test'
             }
         }
-
         stage('Deploy') {
             steps {
-                script {
-                    withCredentials([azureServicePrincipal('AZURE_CREDENTIALS_ID')]) {
-                        bat '''
+                withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
+                    bat '''
                         az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-                        az webapp deploy --name YOUR_APP_SERVICE_NAME --resource-group YOUR_RESOURCE_GROUP --src-path target/*.war
-                        '''
-                    }
+                        az webapp deploy --resource-group <RESOURCE_GROUP> --name <WEB_APP_NAME> --type jar --src-path target/*.jar
+                    '''
                 }
             }
         }
