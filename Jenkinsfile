@@ -1,4 +1,3 @@
-```groovy
 pipeline {
     agent any
     stages {
@@ -16,12 +15,11 @@ pipeline {
             steps {
                 withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
                     sh '''
-                        az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-                        az webapp deploy --resource-group YOUR_RESOURCE_GROUP --name YOUR_APP_NAME --src-path target/*.jar
+                        az login --service-principal -u $AZURE_CREDENTIALS_USR -p $AZURE_CREDENTIALS_PSW --tenant $AZURE_CREDENTIALS_TENANT
+                        az webapp deploy --resource-group <RESOURCE_GROUP> --name <APP_SERVICE_NAME> --src-path target/*.war --type war
                     '''
                 }
             }
         }
     }
 }
-```
