@@ -23,7 +23,7 @@ pipeline {
         //    }
     stage('Deploy') {
     steps {
-        withCredentials([string(credentialsId: 'AZURE_SERVICE_PRINCIPAL', variable: 'AZURE_SERVICE_PRINCIPAL_ID'),
+        withCredentials([string(credentialsId: 'AZURE_SERVICE_PRINCIPAL', variable: 'AZURE_SERVICE_PRINCIPAL'),
                          string(credentialsId: 'AZURE_CREDENTIALS_PASSWORD', variable: 'AZURE_CREDENTIALS_PASSWORD'),
                          string(credentialsId: 'AZURE_CREDENTIALS_TENANT', variable: 'AZURE_CREDENTIALS_TENANT')]) {
             bat '''
