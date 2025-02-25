@@ -17,12 +17,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                bat '''
-                az webapp deploy --resource-group $RESOURCE_GROUP \
-                                 --name $WEB_APP_NAME \
-                                 --type jar \
-                                 --src-path target/*.jar
-                '''
+                bat 'az webapp deploy --resource-group %RESOURCE_GROUP% --name %WEB_APP_NAME% --src-path target\\*.jar --type jar'
             }
         }
     }
