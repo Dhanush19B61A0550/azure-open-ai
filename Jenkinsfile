@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        RESOURCE_GROUP = credentials('RESOURCE_GROUP')
+        WEB_APP_NAME = credentials('WEB_APP_NAME')
+    }
     stages {
         stage('Build') {
             steps {
@@ -13,19 +17,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withCredentials([azureServicePrincipal(
-                    credentialsId: 'azure-credentials', 
-                    subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID', 
-                    clientIdVariable: 'AZURE_CLIENT_ID', 
-                    clientSecretVariable: 'AZURE_CLIENT_SECRET', 
-                    tenantIdVariable: 'AZURE_TENANT_ID'
-                )]) {
-                    bat '''
-                        az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-                        az account set --subscription $AZURE_SUBSCRIPTION_ID
-                        az webapp deploy --resource-group myResourceGroup --name myAppServiceName --src-path target/*.jar --type jar
-                    '''
-                }
+                bat '''
+                az webapp deploy --resource-group $RESOURCE_GROUP \
+                                 --name $WEB_APP_NAME \
+                                 --type jar \
+                                 --src-path target/*.jar
+                '''
             }
         }
     }
